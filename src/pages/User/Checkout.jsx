@@ -58,7 +58,7 @@ function Checkout() {
   };
 
   const initPayment = (data) => {
-    console.log(data.id, "hhhhhhhhhhhhhhh");
+
     const options = {
       key: process.env.RAZORPAY_ID,
       amount: data.amount,
@@ -106,7 +106,7 @@ function Checkout() {
           }
         );
 
-        console.log(data, "kkkkkkkkkkkkkkkkkkkk");
+     
         initPayment(data.data);
       } catch (error) {}
     } else if (cod) {
