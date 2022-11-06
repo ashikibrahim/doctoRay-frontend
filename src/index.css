@@ -130,3 +130,36 @@
   margin-left: -40px;
   border-bottom-left-radius: 10px;
 }
+.homesearch{
+    
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top:10px;
+ /* background-color:#063970; */
+ background-color: #063970;
+ height: 100px;
+ border-radius: 10px;
+ 
+
+  
+  
+}
+.search-box{
+  width: 400px;
+ 
+  height: 38px;
+  
+  border-radius:  10px ;
+}
+.search-div{
+  width:50%;
+  height: 100px;
+  background-color: #063970;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+
+}
