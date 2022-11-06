@@ -58,14 +58,14 @@ function Home() {
               className="container"
               style={{ paddingTop: "100px", paddingBottom: "10px" }}
             >
-              {/* <Row gutter={[30, 40]}>
+              <Row gutter={[30, 40]}>
                 {doctors.map((doctor) => (
                   <Col span={6} xs={24} sm={12} md={12} lg={8} xl={8}>
                     <DoctorCard doctor1={doctor} />
                   </Col>
                 ))}
-              </Row> */}
-              <Row gutter={[30, 40]}>
+              </Row>
+              {/* <Row gutter={[30, 40]}>
                   
                   {doctors.filter((doctor) =>
                   doctor.specialization.toLowerCase().includes(query) || doctor.firstName.toLowerCase().includes(query) 
@@ -75,7 +75,7 @@ function Home() {
                     </Col>
                   ))}
                   
-                </Row>
+                </Row> */}
             </div>
           </>
         )}

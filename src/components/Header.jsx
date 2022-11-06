@@ -190,7 +190,7 @@ const Header = () => {
                 <Tab value="one" label="" />
               </Tabs>
 
-              {user ? (
+              {user? (
                 <>
                   <Button
                     sx={{ marginLeft: "auto", marginRight: "10px" }}
