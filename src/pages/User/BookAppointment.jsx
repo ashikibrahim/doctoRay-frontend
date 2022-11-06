@@ -1,10 +1,8 @@
 import { Button, Col, Input, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
-// import Layout from "../components/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../../redux/alertsSlice";
-import { setUser } from "../../redux/userSlice";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
@@ -12,6 +10,7 @@ import { MDBCardImage } from "mdb-react-ui-kit";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function BookAppointment() {
   const [isAvailable, setIsAvailable] = useState(false);
@@ -30,7 +29,7 @@ function BookAppointment() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/doctor/get-doctor-info-by-id",
+        `${BaseUrl}/api/doctor/get-doctor-info-by-id`,
         {
           doctorId: params.doctorId,
           dateAndtime: startdate,
@@ -45,7 +44,6 @@ function BookAppointment() {
       dispatch(hideLoading());
       if (response.data.success) {
         // toast.success("doctor info fetched successfully")
-        console.log(response.data.data, "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         setDoctor(response.data.data);
       }
     } catch (error) {
@@ -69,7 +67,7 @@ function BookAppointment() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/users/check-booking-avilability",
+        `${BaseUrl}/api/users/check-booking-avilability`,
         {
           doctorId: params.doctorId,
           dateAndtime: startdate,
@@ -93,22 +91,21 @@ function BookAppointment() {
     }
   };
 
-
   const bookNow = async () => {
     setIsAvailable(false);
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/users/book-appointment",
+        `${BaseUrl}/api/users/book-appointment`,
         {
           doctorId: params.doctorId,
-          userId:user._id,
+          userId: user._id,
           dateAndtime: startdate,
-          doctorInfo:doctor,
-          userInfo:user,
+          doctorInfo: doctor,
+          userInfo: user,
           patientname: name,
-          patientage:age,
-          phonenumber:number,
+          patientage: age,
+          phonenumber: number,
         },
         {
           headers: {
@@ -119,7 +116,7 @@ function BookAppointment() {
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate(`/checkout/${response.data.data._id}`)
+        navigate(`/checkout/${response.data.data._id}`);
       } else {
         toast.error(response.data.message);
       }
@@ -128,8 +125,6 @@ function BookAppointment() {
       dispatch(hideLoading());
     }
   };
-
-
 
   useEffect(() => {
     getDoctorData();
@@ -142,7 +137,7 @@ function BookAppointment() {
           // backgroundColor: " #b3e0ff",
           backgroundImage:
             "url(" +
-           "https://images.unsplash.com/photo-1618015359994-a67bd07e48b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80" +
+            "https://images.unsplash.com/photo-1618015359994-a67bd07e48b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=876&q=80" +
             ")",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -178,22 +173,7 @@ function BookAppointment() {
                     {doctor?.start} - {doctor?.end}
                   </h3>
                   <hr />
-                  {/* <p>
-                    <b>Phone Number : </b>
-                    {doctor?.phoneNumber}
-                  </p>
-                  <p>
-                    <b>Address : </b>
-                    {doctor?.address}
-                  </p>
-                  <p>
-                    <b>Fee per Visit : </b>
-                    Rs. {doctor?.feePerConsultation}
-                  </p> */}
-                  {/* <p>
-                    <b>Website : </b>
-                {doctor?.website}
-                  </p> */}
+
                   <Input
                     size="large"
                     name="name"
@@ -224,21 +204,6 @@ function BookAppointment() {
                   />
                   <br />
                   <div className="d-flex flex-column pt-2 mt-2">
-                    {/* <DatePicker
-                      format="DD-MM-YYYY"
-                      onChange={(value) => {
-                        setDate(moment(value).format("DD-MM-YYYY"));
-                        setIsAvailable(false);
-                      }}
-                    /> */}
-                    {/* <TimePicker
-                      format="HH:mm"
-                      className="mt-3"
-                      onChange={(value) => {
-                        setIsAvailable(false);
-                        setTime(moment(value).format("HH:mm"));
-                      }}
-                    /> */}
                     <DatePicker
                       selected={startdate}
                       onChange={(date) => setStartDate(date)}
@@ -261,8 +226,9 @@ function BookAppointment() {
                     )}
 
                     {isAvailable && (
-                      <Button className="primary-button mt-3 full-width-button"
-                      onClick={bookNow}
+                      <Button
+                        className="primary-button mt-3 full-width-button"
+                        onClick={bookNow}
                       >
                         Book Now
                       </Button>

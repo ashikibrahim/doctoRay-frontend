@@ -20,6 +20,7 @@ import {
   FormLabel,
   getBottomNavigationActionUtilityClass,
 } from "@mui/material";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function Profile() {
   const [image, setImage] = useState();
@@ -62,25 +63,21 @@ function Profile() {
       end,
     };
 
-    console.log("gggggggggggggggggggg", specialization);
-
-    console.log(
-      e.target.specialization.value,
-      "ttttttttttttttttttttttttttttttttt"
-    );
-
     try {
       dispatch(showLoading());
-      const response = await axios.post("/api/doctor/update-doctor-info", obj, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post(
+        `${BaseUrl}/api/doctor/update-doctor-info`,
+        obj,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       console.log(response);
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
-        console.log(response, "hhhhhhhhhhhhhhhhhhhhhhhh");
         // navigate("/");
       } else {
         toast.error(response.data.message);
@@ -95,7 +92,7 @@ function Profile() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/doctor/doctor-info",
+        `${BaseUrl}/api/doctor/doctor-info`,
         {
           userId: params.userId,
         },
@@ -119,8 +116,6 @@ function Profile() {
       }
     } catch (error) {}
   };
-
-  console.log(start, "mmmmmmmmmmmmmmmmmmmmmmm");
 
   useEffect(() => {
     getData();

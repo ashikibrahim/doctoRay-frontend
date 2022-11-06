@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Header from "../../components/Header";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function DoctorList() {
   const [doctors, setDoctors] = useState([]);
@@ -15,7 +16,8 @@ function DoctorList() {
   const getDoctorsData = async () => {
     try {
       dispatch(showLoading());
-      const response = await axios.get("/api/admin/get-all-doctors", {
+      const response = await axios.get(
+        `${BaseUrl}/api/admin/get-all-doctors`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -34,7 +36,7 @@ function DoctorList() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/admin/change-doctor-account-status",
+        `${BaseUrl}/api/admin/change-doctor-account-status`,
         { doctorId: record._id, userId: record.userId, status:status },
         {
           headers: {

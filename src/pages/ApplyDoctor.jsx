@@ -20,7 +20,8 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import moment from "moment";
-import Buttton from "react"
+import Buttton from "react";
+import { BaseUrl } from "../Utils/BaseUrl";
 
 function ApplyDoctor() {
   const [image, setImage] = useState();
@@ -30,8 +31,6 @@ function ApplyDoctor() {
   const user = useSelector((state) => state.user);
 
   const token = user.token;
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +55,7 @@ function ApplyDoctor() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/users/apply-doctor-account",
+        `${BaseUrl}/api/users/apply-doctor-account`,
         formdata,
         {
           headers: {
@@ -88,7 +87,7 @@ function ApplyDoctor() {
           <form onSubmit={handleSubmit} allign="center">
             <Typography gutterBottom variant="h3" align="center">
               Apply Doctor
-              <hr/>
+              <hr />
             </Typography>
             <Card>
               <CardContent>

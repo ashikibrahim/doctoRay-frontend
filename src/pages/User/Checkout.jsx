@@ -14,6 +14,7 @@ import { showLoading, hideLoading } from "../../redux/alertsSlice";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function Checkout() {
   const params = useParams();
@@ -36,7 +37,7 @@ function Checkout() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/users/get-appointment-details-by-id",
+        `${BaseUrl}/api/users/get-appointment-details-by-id`,
         {
           appointmentId: params.appointmentId,
         },
@@ -69,9 +70,8 @@ function Checkout() {
       order_id: data.id,
       handler: async (response) => {
         try {
-          const verifyUrl = "/api/users/verify";
+          const verifyUrl = `${BaseUrl}/api/users/verify`;
           const { data } = await axios.post(verifyUrl, response);
-          console.log(data, "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
           if (data.success) {
             navigate("/");
             toast.success(data.message);
@@ -94,7 +94,7 @@ function Checkout() {
     if (online) {
       try {
         const { data } = await axios.post(
-          "/api/users/checkout",
+          `${BaseUrl}/api/users/checkout`,
           {
             appointmentId: params.appointmentId,
             amount,
@@ -111,7 +111,6 @@ function Checkout() {
       } catch (error) {}
     } else if (cod) {
       try {
-        console.log("cash kkkkkkkkkkkkkkkkkkkkkkkkkkk");
         navigate("/");
         toast.success(data.message);
       } catch (error) {}

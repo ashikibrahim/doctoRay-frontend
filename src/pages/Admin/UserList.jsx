@@ -9,6 +9,7 @@ import Header from "../../components/Header";
 import moment from "moment";
 import Button from "react-bootstrap/Button";
 import toast from "react-hot-toast";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -17,7 +18,7 @@ function UserList() {
   const getUserData = async () => {
     try {
       dispatch(showLoading());
-      const response = await axios.get("/api/admin/get-all-users", {
+      const response = await axios.get(`${BaseUrl}/api/admin/get-all-users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -36,7 +37,7 @@ function UserList() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/admin/change-user-account-status",
+        `${BaseUrl}/api/admin/change-user-account-status`,
         { userid: record._id, status: status },
         {
           headers: {

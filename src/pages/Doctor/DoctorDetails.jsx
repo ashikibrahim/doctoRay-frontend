@@ -19,6 +19,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function DoctorDetails() {
   const [doctor, setDoctor] = useState(null);
@@ -30,7 +31,7 @@ function DoctorDetails() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "/api/doctor/get-doctor-info-by-id",
+        `${BaseUrl}/api/doctor/get-doctor-info-by-id`,
         {
           doctorId: params.doctorId,
         },
@@ -42,7 +43,6 @@ function DoctorDetails() {
       );
       dispatch(hideLoading());
       if (response.data.success) {
-        console.log(response, "hhhhhhhhhhhhhhhhhhhhhhhhhh");
         setDoctor(response.data.data);
       }
     } catch (error) {
@@ -152,7 +152,10 @@ function DoctorDetails() {
                   </div>
                   <div className="mb-3">
                     <p className="lead fw-normal mb-1">Phone Number: </p>
-                    <div className="p-2" style={{ backgroundColor: " #bfbfbf" }}>
+                    <div
+                      className="p-2"
+                      style={{ backgroundColor: " #bfbfbf" }}
+                    >
                       <MDBCardText className="font-italic mb-1">
                         {doctor?.phoneNumber}
                       </MDBCardText>
@@ -160,7 +163,10 @@ function DoctorDetails() {
                   </div>
                   <div className="mb-3">
                     <p className="lead fw-normal mb-1">Experience: </p>
-                    <div className="p-2" style={{ backgroundColor: " #bfbfbf" }}>
+                    <div
+                      className="p-2"
+                      style={{ backgroundColor: " #bfbfbf" }}
+                    >
                       <MDBCardText className="font-italic mb-1">
                         {doctor?.experience}
                       </MDBCardText>
@@ -168,7 +174,10 @@ function DoctorDetails() {
                   </div>
                   <div className="mb-3">
                     <p className="lead fw-normal mb-1">Doctor-fee: </p>
-                    <div className="p-2" style={{ backgroundColor: " #bfbfbf" }}>
+                    <div
+                      className="p-2"
+                      style={{ backgroundColor: " #bfbfbf" }}
+                    >
                       <MDBCardText className="font-italic mb-1">
                         {doctor?.feePerConsultation}
                       </MDBCardText>
@@ -176,7 +185,10 @@ function DoctorDetails() {
                   </div>
                   <div className="mb-3">
                     <p className="lead fw-normal mb-1">start-time: </p>
-                    <div className="p-2" style={{ backgroundColor: " #bfbfbf" }}>
+                    <div
+                      className="p-2"
+                      style={{ backgroundColor: " #bfbfbf" }}
+                    >
                       <MDBCardText className="font-italic mb-1">
                         {doctor?.start}
                       </MDBCardText>
@@ -184,15 +196,25 @@ function DoctorDetails() {
                   </div>
                   <div className="mb-3">
                     <p className="lead fw-normal mb-1">End-time:</p>
-                    <div className="p-2" style={{ backgroundColor: " #bfbfbf" }}>
+                    <div
+                      className="p-2"
+                      style={{ backgroundColor: " #bfbfbf" }}
+                    >
                       <MDBCardText className="font-italic mb-1">
                         {doctor?.end}
                       </MDBCardText>
                     </div>
                   </div>
-                  <MDBBtn className="float-end" color="success" rounded block size="md"  onClick={() => navigate(`/book-appointment/${doctor._id}`)} >
-                                        <MDBIcon far icon="clock me-2" /> Make An Appointment
-                                    </MDBBtn>
+                  <MDBBtn
+                    className="float-end"
+                    color="success"
+                    rounded
+                    block
+                    size="md"
+                    onClick={() => navigate(`/book-appointment/${doctor._id}`)}
+                  >
+                    <MDBIcon far icon="clock me-2" /> Make An Appointment
+                  </MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>

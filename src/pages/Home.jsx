@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Layout from "../components/Layout";
 import Header from "../components/Header";
 import DoctorCard from "../components/DoctorCard";
 import DoctorCarousel from "../components/DoctorCarousel";
@@ -8,16 +7,19 @@ import axios from "axios";
 import { Col, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
+import { BaseUrl } from "../Utils/BaseUrl";
 
 function Home() {
   const [doctors, setDoctors] = useState([]);
   const dispatch = useDispatch();
-  const {user} = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
 
   const getData = async () => {
     try {
       dispatch(showLoading());
-      const response = await axios.get("/api/users/get-all-approved-doctors");
+      const response = await axios.get(
+        `${BaseUrl}/api/users/get-all-approved-doctors`
+      );
       dispatch(hideLoading());
       if (response.data.success) {
         setDoctors(response.data.data);
@@ -34,12 +36,12 @@ function Home() {
   return (
     <>
       <div className="mainhome">
-      <Header />
-        {user?.isAdmin? (
+        <Header />
+        {user?.isAdmin ? (
           <Header />
-        ) : user?.isDoctor? (
+        ) : user?.isDoctor ? (
           <Header />
-        ) : 
+        ) : (
           <>
             <Header />
             <div style={{ paddingTop: "65px" }}>
@@ -58,7 +60,7 @@ function Home() {
               </Row>
             </div>
           </>
-        }
+        )}
       </div>
     </>
   );

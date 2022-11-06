@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import Header from "../../components/Header";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function Appointments() {
   const [appointments, setAppointments] = useState([]);
@@ -17,11 +18,14 @@ function Appointments() {
   const getAppointments = async () => {
     try {
       dispatch(showLoading());
-      const response = await axios.get("/api/doctor/get-doctor-appoitments", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `${BaseUrl}/api/doctor/get-doctor-appoitments`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       dispatch(hideLoading());
       if (response.data.success) {
         setAppointments(response.data.data);
@@ -34,17 +38,18 @@ function Appointments() {
   const changeAppointmentStatus = async (record, status) => {
     try {
       dispatch(showLoading());
-      const response = await axios.post("/api/doctor/change-appointment-status",
-      {
+      const response = await axios.post(
+        `${BaseUrl}/api/doctor/change-appointment-status`,
+        {
           appointmentId: record._id,
-          status:status,
+          status: status,
         },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
-      )
+      );
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -52,10 +57,9 @@ function Appointments() {
       }
     } catch (error) {
       toast.error("Error changing doctor account status");
-            dispatch(hideLoading());
+      dispatch(hideLoading());
     }
   };
-  
 
   const columns = [
     {
@@ -68,7 +72,7 @@ function Appointments() {
       dataIndex: "phoneNumber",
       render: (text, record) => <span>{record.doctorInfo.phoneNumber}</span>,
     },
-  
+
     {
       title: "Created At",
       dataIndex: "createdAt",
@@ -82,34 +86,32 @@ function Appointments() {
       title: "actions",
       dataIndex: "actions",
       render: (text, record) => (
-     
-            <div className="d-flex">
-              {record.status === "Pending" && (
-                <h1
-                  className="anchor"
-                  onClick={() => changeAppointmentStatus(record, "Approved")}
-                >
-                  <Button variant="success">Approve</Button>
-                </h1>
-              )}
-              {record.status === "Approved" && (
-                <h1
-                  className="anchor"
-                  onClick={() => changeAppointmentStatus(record, "Rejected")}
-                >
-                  <Button variant="danger">rejected</Button>
-                </h1>
-              )}
-              {record.status === "Rejected" && (
-                <h1
-                  className="anchor"
-                  onClick={() => changeAppointmentStatus(record, "Approved")}
-                >
-                  <Button variant="success">Approve</Button>
-                </h1>
-              )}
-            </div>
-         
+        <div className="d-flex">
+          {record.status === "Pending" && (
+            <h1
+              className="anchor"
+              onClick={() => changeAppointmentStatus(record, "Approved")}
+            >
+              <Button variant="success">Approve</Button>
+            </h1>
+          )}
+          {record.status === "Approved" && (
+            <h1
+              className="anchor"
+              onClick={() => changeAppointmentStatus(record, "Rejected")}
+            >
+              <Button variant="danger">rejected</Button>
+            </h1>
+          )}
+          {record.status === "Rejected" && (
+            <h1
+              className="anchor"
+              onClick={() => changeAppointmentStatus(record, "Approved")}
+            >
+              <Button variant="success">Approve</Button>
+            </h1>
+          )}
+        </div>
       ),
     },
   ];

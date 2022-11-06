@@ -6,6 +6,7 @@ import axios from "axios";
 import { Table } from "antd";
 import moment from "moment";
 import Header from "../../components/Header";
+import { BaseUrl } from "../../Utils/BaseUrl";
 
 function UserAppointments() {
   const [appointments, setAppointments] = useState([]);
@@ -15,7 +16,7 @@ function UserAppointments() {
     try {
       dispatch(showLoading());
       const response = await axios.get(
-        "/api/users/get-appointments-by-user-id",
+        `${BaseUrl}/api/users/get-appointments-by-user-id`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -57,9 +58,13 @@ function UserAppointments() {
       dataIndex: "status",
       render: (text, record) => (
         <div className="d-flex">
-          {record.status === "Pending" && <h6 style={{color:"red"}}>pending</h6>}
-          {record.status === "Approved" && <h6 style={{color:"green"}}>Approved</h6>}
-          </div>
+          {record.status === "Pending" && (
+            <h6 style={{ color: "red" }}>pending</h6>
+          )}
+          {record.status === "Approved" && (
+            <h6 style={{ color: "green" }}>Approved</h6>
+          )}
+        </div>
       ),
     },
   ];
