@@ -15,13 +15,13 @@ import VaccinesIcon from "@mui/icons-material/Vaccines";
 import DrawerComp from "./DrawerComp";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-// import { logout, reset } from "../redux/auth/authSlice";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { showLoading, hideLoading } from "../redux/alertsSlice";
 import axios from "axios";
 import { setUser } from "../redux/userSlice";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { BaseUrl } from "../Utils/BaseUrl";
 
 // const PAGES = ["HOME", "APPOINTMENTS", "APPLY-DOCTOR", "PROFILE"];
 
@@ -32,30 +32,27 @@ const Header = () => {
   console.log(theme);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { user } = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state.user);
 
-  // console.log(user,"header user BBBBBBBBBBB");
+  const { user } = useSelector((state) => state.user);
 
   const getUser = async () => {
     try {
       dispatch(showLoading());
       const token = localStorage.getItem("token");
-      console.log(token, "tokennnnnnnnnn");
-      const response = await axios.get("/api/users/get-user-info-by-id", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
 
-      // userData=response.data.data;
-      // console.log(userData,"lkaedjfkladsjhlkdjsfakdsjfh54hdr");
+      const response = await axios.get(
+        `${BaseUrl}/api/users/get-user-info-by-id`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       dispatch(hideLoading());
       if (response.data.success) {
-        // setUserInfo(response.data.data);
         const userData = response.data.data;
 
         if (userData.isBlock === "block") {
@@ -64,14 +61,11 @@ const Header = () => {
         } else {
           dispatch(setUser(response.data.data));
         }
-
-        // toast.success(response.data.message);
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       dispatch(hideLoading());
-      // toast.error("Something went wrong adadqadadaadadadada");
     }
   };
 
@@ -82,10 +76,7 @@ const Header = () => {
   }, [userInfo]);
 
   const onLogout = () => {
-    // dispatch(logout());
-    // dispatch(reset());
     dispatch(setUser(null));
-    // setUserInfo(null);
     localStorage.clear();
     navigate("/");
   };
