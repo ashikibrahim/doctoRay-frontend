@@ -59,7 +59,6 @@ function Checkout() {
   };
 
   const initPayment = (data) => {
-
     const options = {
       key: process.env.RAZORPAY_ID,
       amount: data.amount,
@@ -106,7 +105,6 @@ function Checkout() {
           }
         );
 
-     
         initPayment(data.data);
       } catch (error) {}
     } else if (cod) {
@@ -313,10 +311,14 @@ function Checkout() {
                 </div>
               </div>
 
-              {/* <MDBBtn color="success" size="md" block onClick={payment}>
+              {/* <button onClick={payment}>Proceed to payment</button> */}
+              <button
+                className="btn "
+                style={{ background: "#063970", color: "white" }}
+                onClick={payment}
+              >
                 Proceed to payment
-              </MDBBtn> */}
-              <button onClick={payment}>Proceed to payment</button>
+              </button>
             </div>
           </MDBCol>
           <MDBCol md="7" lg="4" xl="4" offsetLg="1" offsetXl="2">
