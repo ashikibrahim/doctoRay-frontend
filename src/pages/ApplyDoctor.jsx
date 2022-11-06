@@ -48,9 +48,7 @@ function ApplyDoctor() {
     formdata.append("image", image);
     formdata.append("userId", userId);
 
-    console.log(image, "front image log");
-    console.log(formdata, "frt fromdat log");
-    console.log("onfinish applyform");
+
 
     try {
       dispatch(showLoading());

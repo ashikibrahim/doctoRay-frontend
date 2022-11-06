@@ -102,7 +102,7 @@ const Header = () => {
     },
     {
       name: "Profile",
-      path: "/Profile",
+      path: "",
       icon: "ri-user-line",
       value: "four",
     },
@@ -206,7 +206,7 @@ const Header = () => {
                   >
                     <NotificationsIcon sx={{ color: "#1976D2" }} />
                   </Badge>
-                  <Link to="/Profile">
+                  <Link to="">
                     <Typography sx={{ color: "1976D2", marginLeft: "10px" }}>
                       {user?.name}
                     </Typography>
